@@ -47,19 +47,6 @@ export class APIServiceResource {
             throw new Error("No such resource: " + resourceName);
     }
 
-
-    getAuth() {
-        return fetch(`${this.baseUrl}/auth/me`,APIServiceResource.MethodType.GET());
-    }
-
-    createUser(newUser) {
-        return fetch(`${this.baseUrl}/auth/register`, APIServiceResource.MethodType.POST(newUser));
-    }
-
-    login(user) {
-        return fetch(`${this.baseUrl}/auth/login`, APIServiceResource.MethodType.POST(user));
-    }
-
     static MethodType = {
         getHeaders: () => {
             return {

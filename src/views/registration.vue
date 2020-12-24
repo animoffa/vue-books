@@ -39,7 +39,8 @@
             async onSubmit() {
                 if (this.login && this.password && this.name) {
                     try {
-                        await API.createUser({username: this.login, password: this.password, fullName: this.name});
+
+                        await API.register({username: this.login, password: this.password, fullName: this.name});
                         await this.$router.push('/login')
                     } catch (e) {
                         console.error("Error while auth: " + e.toString());

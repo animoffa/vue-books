@@ -33,26 +33,23 @@
         mounted() {
             localStorage.removeItem("token");
         },
-
         methods: {
             async onSubmit() {
                 if (this.login && this.password && this.password.length > 3) {
                     try {
-                        let bu = await API.login({username: this.login, password: this.password});
-                        let token = this.login + ":" + this.password;
+                        console.log("sefs");
+                        const res = await API.login({username: this.login, password: this.password});
+                        const token = this.login + ":" + this.password;
                         await localStorage.setItem("token", btoa(token));
-                        if (bu.status !== 401 && bu.status !== 500) {
+                        if (res.status !== 401 && res.status !== 500) {
                             await this.$router.push('/');
                         }
-
                     } catch (e) {
                         console.error("Error while auth: " + e.toString());
                     }
-
-
-                    this.login = ''
-                    this.password = ''
-                    this.name = ''
+                    this.login = '';
+                    this.password = '';
+                    this.name = '';
                 }
 
                 this.errors = [];
@@ -62,7 +59,8 @@
                 }
                 if (!this.password) {
                     this.errors.push('Требуется указать пароль.');
-                } else if (this.password.length < 3) {
+                }
+                if (this.password.length < 3) {
                     this.errors.push('Требуется указать пароль больше 3 символов.');
                 }
 

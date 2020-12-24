@@ -101,7 +101,7 @@
                             </li>
                         </ul>
 
-                        <form @submit.prevent="onAddQuote2">
+                        <form @submit.prevent="onAddQuoteInExistingBook">
                             <div class="textarea-container">
                     <textarea placeholder="Добавить цитату" v-model="quote">
                     </textarea>
@@ -191,7 +191,7 @@
 
             async changeMark(newMark) {
                 this.card.mark = newMark;
-                let index = this.cards.indexOf(this.card)
+                const index = this.cards.indexOf(this.card)
                 try {
                     const res = await API.updateResource(APIServiceResource.ResourceType.books, this.card._id, this.card)
                     await this.cards.splice(index, 1, res.json())
@@ -200,7 +200,7 @@
                     console.error("Error while fetching: " + e.toString());
                 }
             },
-            async onAddQuote2() {
+            async onAddQuoteInExistingBook() {
                 this.card.quotes.push(this.quote)
                 await this.changeQuotes()
                 this.quote = ''

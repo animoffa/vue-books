@@ -7,31 +7,31 @@ export class APIServiceResource {
         APIServiceResource.instance = this;
     }
 
-    static getInstance(baseUrl) {
-        if (APIServiceResource.instance)
-            return APIServiceResource.instance;
-        if (!baseUrl)
-            throw new Error("Base url is empty!");
-        return APIServiceResource.instance = new APIServiceResource(baseUrl);
-    }
-
-
-    fetch(adrs,config) {
-        let url = `${this.baseUrl}/auth/${adrs}`;
-        return fetch(url,config );
+    fetch(adrs, config) {
+        const url = `${this.baseUrl}/auth/${adrs}`;
+        return fetch(url, config);
     }
 
     getAuth() {
         return this.fetch(`me`, ({method: 'GET', headers: APIServiceResource.MethodType.getHeaders()}));
     }
 
-    createUser(newUser) {
-        return this.fetch(`register`, ({method: 'POST', body: JSON.stringify(newUser), headers: APIServiceResource.MethodType.getHeaders()}));
+    register(newUser) {
+        return this.fetch(`register`, ({
+            method: 'POST',
+            body: JSON.stringify(newUser),
+            headers: APIServiceResource.MethodType.getHeaders()
+        }));
     }
 
     login(user) {
-        return this.fetch(`login`,  ({method: 'POST', body: JSON.stringify(user), headers: APIServiceResource.MethodType.getHeaders()}));
+        return this.fetch(`login`, ({
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: APIServiceResource.MethodType.getHeaders()
+        }));
     }
+
     static MethodType = {
         getHeaders: () => {
             return {
@@ -41,4 +41,5 @@ export class APIServiceResource {
         },
     };
 }
+
 export default new APIServiceResource('http://localhost:3000');
